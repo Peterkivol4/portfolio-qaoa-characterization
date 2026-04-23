@@ -1,0 +1,40 @@
+title: Mixer Dominance Characterisation Suite
+output_dir: results/mixer_dominance_suite
+study_mode: factorial
+base:
+  n_assets: 8
+  budget: 3
+  p_layers: 2
+  evaluation_budget: 12
+  n_init_points: 4
+  shots: 256
+  cvar_alpha: 0.1
+  execution_mode: fast_simulator
+  execution_billing_mode: job
+  job_queue_latency_seconds: 2.0
+  transpile_topology: auto
+  calibration_aware_routing: true
+  noise_model: depolarizing
+  measurement_mitigation: true
+  bo_acquisition: ucb
+  bo_target: raw
+  bo_max_gp_dim: 16
+  bo_high_dim_strategy: random_embedding
+  periodic_parameter_wrap: true
+  bootstrap_resamples: 500
+  qpu_pricing_tier: custom
+  qpu_price_per_second_usd: 0.0
+seeds: [1, 2, 3]
+studies:
+  - name: regime
+    key: regime
+    values: [baseline, clustered_assets, hard_budget]
+  - name: asset_scale
+    key: n_assets
+    values: [6, 8, 10, 12]
+  - name: mixer
+    key: mixer_type
+    values: [xy, product_x]
+  - name: two_qubit_noise
+    key: depolarizing_strength_2q
+    values: [0.001, 0.005, 0.01, 0.02]
