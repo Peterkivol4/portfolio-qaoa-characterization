@@ -6,6 +6,12 @@ PortfolioQAOA is a reproducible **characterisation study platform** for constrai
 
 This repo is not positioned as a toy VQE script or a single-demo optimizer comparison. It is a research instrument that combines structured portfolio regimes, a classical Markowitz baseline, fair optimizer accounting, backend-aware execution, QUBO-structure diagnostics, and report generation into one comparative loop.
 
+## Snapshot
+
+**Headline result:** In the saved multi-regime suite, Bayesian Optimization reached a `100.00%` mean feasible-hit rate, while Classical Markowitz delivered both the best mean raw objective (`-0.4625` in the sparse-covariance regime) and the strongest cost-adjusted performance.
+
+![Portfolio QAOA suite dashboard](results/multi_regime_suite/suite_dashboard.png)
+
 ## What problem this project is solving
 
 Most small quantum-optimization repos only answer a shallow question:
