@@ -1,16 +1,16 @@
 # PortfolioQAOA Characterisation Study
 
+**Short description:** Hardware-aware characterisation platform for constrained QAOA portfolio optimization under shared runtime, shot, queue, and billing budgets.
+
+![Multi-regime suite dashboard](results/multi_regime_suite/suite_dashboard.png)
+
+**Headline result.** Across the completed multi-regime suite, Classical Markowitz delivered the best mean raw objective in every reported study slice while Bayesian Optimization still reached a `100.00%` feasible-hit rate; in the separate mixer pilot, the `xy` mixer won `17/24` quantum-only paired comparisons (`results/multi_regime_suite/suite_report.md`, `results/mixer_dominance_pilot_v2/mixer_dominance_report.md`).
+
 PortfolioQAOA is a reproducible **characterisation study platform** for constrained QAOA portfolio optimization. It is built to answer one core question:
 
 > **When is a more sophisticated classical optimizer actually worth its runtime, shot, queue, and mitigation cost for constrained QAOA?**
 
 This repo is not positioned as a toy VQE script or a single-demo optimizer comparison. It is a research instrument that combines structured portfolio regimes, a classical Markowitz baseline, fair optimizer accounting, backend-aware execution, QUBO-structure diagnostics, and report generation into one comparative loop.
-
-## Snapshot
-
-**Headline result:** In the saved multi-regime suite, Bayesian Optimization reached a `100.00%` mean feasible-hit rate, while Classical Markowitz delivered both the best mean raw objective (`-0.4625` in the sparse-covariance regime) and the strongest cost-adjusted performance.
-
-![Portfolio QAOA suite dashboard](results/multi_regime_suite/suite_dashboard.png)
 
 ## What problem this project is solving
 
