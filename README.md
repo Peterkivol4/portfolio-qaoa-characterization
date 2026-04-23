@@ -6,6 +6,14 @@
 
 **Headline result.** Across the completed multi-regime suite, Classical Markowitz delivered the best mean raw objective in every reported study slice while Bayesian Optimization still reached a `100.00%` feasible-hit rate; in the separate mixer pilot, the `xy` mixer won `17/24` quantum-only paired comparisons (`results/multi_regime_suite/suite_report.md`, `results/mixer_dominance_pilot_v2/mixer_dominance_report.md`).
 
+This repo studies not just whether QAOA can run, but whether its extra optimization complexity is justified under realistic resource limits.
+
+## Quick read
+
+- [Results at a glance (PDF)](docs/results_at_a_glance.pdf)
+- [Decision map](docs/decision_map.md)
+- [When BO was not worth it](docs/when_bo_was_not_worth_it.md)
+
 PortfolioQAOA is a reproducible **characterisation study platform** for constrained QAOA portfolio optimization. It is built to answer one core question:
 
 > **When is a more sophisticated classical optimizer actually worth its runtime, shot, queue, and mitigation cost for constrained QAOA?**
@@ -63,6 +71,17 @@ A good way to describe the repo is:
 
 That framing is closer to what the code actually does than simply saying "I compared three optimizers."
 
+## What this repo does not claim
+
+This repo is intentionally restrained about its claims.
+
+It is not:
+- a quantum advantage proof
+- a claim that Bayesian Optimization universally wins
+- a general live-hardware demonstration of portfolio QAOA at scale
+
+The point of the project is to make the tradeoffs legible, including the negative results.
+
 ## Repository layout
 
 ```text
@@ -106,23 +125,6 @@ pip install -r requirements.txt
 ```
 
 `pyproject.toml` and `requirements.txt` are the canonical dependency entry points for review. The checked-in `uv.lock` is only a local reproducibility aid and is not required to run the project.
-
-## Monolith mirror
-
-A generated single-file mirror of the package lives under `monolith-full/` as
-`portfolio_qaoa_bench_monolith.py`.
-
-Regenerate it after any source change:
-
-```bash
-python scripts/build_monolith_full.py
-```
-
-Check that it is in sync:
-
-```bash
-python scripts/build_monolith_full.py --check
-```
 
 ## Usage
 
@@ -173,11 +175,22 @@ Suite runs produce:
 
 The default suite now writes to `results/multi_regime_suite/` so precomputed artifacts can live in the repository instead of being hidden behind ignore rules.
 
+For a faster reviewer-facing synthesis, the repo also keeps:
+- a one-page summary at [docs/results_at_a_glance.pdf](docs/results_at_a_glance.pdf)
+- a decision-map artifact at [docs/figures/decision_map.png](docs/figures/decision_map.png)
+- a negative-results note at [docs/when_bo_was_not_worth_it.md](docs/when_bo_was_not_worth_it.md)
+
 The suite report now includes:
 - the research question the benchmark is answering
 - technical contributions demonstrated by the run
 - evidence summaries drawn from the aggregated results
 - application-ready language that can be adapted into project descriptions or statements
+
+The reviewer-facing PDF and decision map can be regenerated with:
+
+```bash
+python scripts/build_results_at_a_glance.py
+```
 
 ## Related work
 
@@ -209,6 +222,22 @@ It is not:
 - Exact feasible references are intentionally disabled once `n_assets` exceeds `exact_reference_max_assets`; reports surface that as `NA` instead of implying a ground-truth approximation gap that was never computed.
 - Real hardware studies still need cloud credentials and backend access.
 - Some benchmark conclusions still depend on the chosen regime families and cost model assumptions.
+
+## Monolith mirror
+
+For audit and packaging convenience, a generated single-file mirror of the package lives under `monolith-full/` as `portfolio_qaoa_bench_monolith.py`.
+
+Regenerate it after any source change:
+
+```bash
+python scripts/build_monolith_full.py
+```
+
+Check that it is in sync:
+
+```bash
+python scripts/build_monolith_full.py --check
+```
 
 ## Current maturity
 
