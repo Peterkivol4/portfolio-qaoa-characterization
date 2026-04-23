@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install pytest
+      - name: Test
+        run: pytest -q
+      - name: Coverage
+        run: |
+          pip install pytest-cov
+          pytest --cov=portfolio_qaoa_bench --cov-report=term-missing -q
+      - name: Type check
+        run: |
+          pip install mypy
+          mypy src/portfolio_qaoa_bench --ignore-missing-imports
+      - name: Baseline manifest
+        run: python scripts/make_baseline_manifest.py
+      - name: Monolith sync
+        run: python scripts/build_monolith_full.py --check

@@ -1,0 +1,10 @@
+{
+  "metric_name": "best_raw_objective",
+  "row_count": 128,
+  "variance_explained": {
+    "mixer_type": 0.011291156812163486,
+    "method": 0.028547531697953796,
+    "regime": 0.0133567318943468
+  },
+  "mixer_method_interaction_share": 0.024465740426954128
+}

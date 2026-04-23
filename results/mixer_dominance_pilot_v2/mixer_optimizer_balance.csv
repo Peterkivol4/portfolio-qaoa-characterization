@@ -1,0 +1,9 @@
+study_name,regime,n_assets,budget,execution_mode,noise_model,depolarizing_strength_2q,p_layers,evaluation_budget,shots,cvar_alpha,invalid_penalty,metric_name,mean_xy_metric,mean_product_x_metric,mixer_effect,optimizer_effect,dominant_factor,better_mixer,mean_constraint_hardness
+factorial,baseline,6,4,fast_simulator,depolarizing,0.001,2,6,128,0.1,50.0,best_raw_objective,-0.5069066713678063,-0.46367299519212946,0.04323367617567686,0.039548052595953925,mixer,xy,0.234375
+factorial,baseline,6,4,fast_simulator,depolarizing,0.02,2,6,128,0.1,50.0,best_raw_objective,-0.48250640544357465,-0.4743577572362234,0.008148648207351228,0.043313903326659325,optimizer,xy,0.234375
+factorial,baseline,12,4,fast_simulator,depolarizing,0.001,2,6,128,0.1,50.0,best_raw_objective,-0.44388783147042066,-0.37142368232982015,0.07246414914060051,0.12917137132701295,optimizer,xy,0.120849609375
+factorial,baseline,12,4,fast_simulator,depolarizing,0.02,2,6,128,0.1,50.0,best_raw_objective,-0.3714492301188453,-0.35445811852325204,0.016991111595593245,0.1781073771909566,optimizer,xy,0.120849609375
+factorial,hard_budget,6,4,fast_simulator,depolarizing,0.001,2,6,128,0.1,50.0,best_raw_objective,-0.418784500842206,-0.4158680870730075,0.0029164137691984893,0.0023013005650024954,mixer,xy,0.234375
+factorial,hard_budget,6,4,fast_simulator,depolarizing,0.02,2,6,128,0.1,50.0,best_raw_objective,-0.4171644657463054,-0.4164667893416154,0.0006976764046899842,0.003340950954076466,optimizer,xy,0.234375
+factorial,hard_budget,12,4,fast_simulator,depolarizing,0.001,2,6,128,0.1,50.0,best_raw_objective,-0.3989614330943944,0.3320833626218536,0.731044795716248,1.460352140913132,optimizer,xy,0.120849609375
+factorial,hard_budget,12,4,fast_simulator,depolarizing,0.02,2,6,128,0.1,50.0,best_raw_objective,-0.39050589455955576,-0.38738586913212814,0.0031200254274276196,0.025049186568596837,optimizer,xy,0.120849609375
