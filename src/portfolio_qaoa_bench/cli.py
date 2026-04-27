@@ -1,11 +1,32 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from dataclasses import replace
+from pathlib import Path
 
-from .config import RunSpec, load_runspec, load_suite_spec
+from .config import RunSpec, SpinRunConfig, load_runspec, load_spin_runspec, load_suite_spec
 from .constants import DEFAULT_CLI_DESCRIPTION
+from .phase_maps import (
+    load_resolution_records_csv,
+    parse_thresholds,
+    run_p_layer_sweep,
+    run_parameter_confusion_study,
+    write_resolution_cost_report,
+)
 from .pipeline import run_benchmark, run_smoke_test, run_suite
+
+
+def _csv_ints(text: str) -> list[int]:
+    return [int(item.strip()) for item in text.split(",") if item.strip()]
+
+
+def _csv_floats(text: str) -> list[float]:
+    return [float(item.strip()) for item in text.split(",") if item.strip()]
+
+
+def _csv_strings(text: str) -> list[str]:
+    return [item.strip() for item in text.split(",") if item.strip()]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -61,9 +82,100 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def build_spin_parser() -> argparse.ArgumentParser:
+    defaults = SpinRunConfig()
+    parser = argparse.ArgumentParser(description="LayerField QAOA spin-physics studies")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    p_sweep = subparsers.add_parser("p-sweep", help="Run a p-layer physical-resolution sweep")
+    p_sweep.add_argument("--config", type=str, help="Optional YAML config for spin studies")
+    p_sweep.add_argument("--n-spins", type=str, required=True)
+    p_sweep.add_argument("--p-values", type=str, required=True)
+    p_sweep.add_argument("--j2-values", type=str, required=True)
+    p_sweep.add_argument("--h-values", type=str, required=True)
+    p_sweep.add_argument("--j1", type=float, default=defaults.j1)
+    p_sweep.add_argument("--optimizer", type=str, default=defaults.optimizer)
+    p_sweep.add_argument("--seeds", type=int, default=defaults.seeds)
+    p_sweep.add_argument("--shots", type=int, default=defaults.shots)
+    p_sweep.add_argument("--evaluation-budget", type=int, default=defaults.evaluation_budget)
+    p_sweep.add_argument("--boundary", type=str, default=defaults.boundary)
+    p_sweep.add_argument("--output", type=str, required=True)
+    p_sweep.add_argument("--thresholds", type=str, default="energy=0.02,magnetization=0.05,correlation=0.05,fidelity=0.10")
+
+    confusion = subparsers.add_parser("parameter-confusion", help="Run a parameter-confusion study across spin regimes")
+    confusion.add_argument("--config", type=str, help="Optional YAML config for spin studies")
+    confusion.add_argument("--n-spins", type=int, default=defaults.n_spins)
+    confusion.add_argument("--p-values", type=str, required=True)
+    confusion.add_argument("--regimes", type=str, required=True)
+    confusion.add_argument("--optimizer", type=str, default=defaults.optimizer)
+    confusion.add_argument("--evaluation-budget", type=int, default=defaults.evaluation_budget)
+    confusion.add_argument("--shots", type=int, default=defaults.shots)
+    confusion.add_argument("--boundary", type=str, default=defaults.boundary)
+    confusion.add_argument("--output", type=str, required=True)
+
+    resolution = subparsers.add_parser("resolution-cost", help="Summarize the runtime cost of physical recovery thresholds")
+    resolution.add_argument("--input", type=str, required=True)
+    resolution.add_argument("--thresholds", type=str, required=True)
+    resolution.add_argument("--output", type=str, required=True)
+    return parser
+
+
+def _run_spin_cli(argv: list[str]) -> None:
+    parser = build_spin_parser()
+    args = parser.parse_args(argv)
+    if args.command == "p-sweep":
+        base = SpinRunConfig().normalized() if not args.config else load_spin_runspec(args.config)
+        base = replace(
+            base,
+            j1=args.j1,
+            optimizer=args.optimizer,
+            seeds=args.seeds,
+            shots=args.shots,
+            evaluation_budget=args.evaluation_budget,
+            boundary=args.boundary,
+        ).normalized()
+        run_p_layer_sweep(
+            base_cfg=base,
+            n_spins_values=_csv_ints(args.n_spins),
+            p_values=_csv_ints(args.p_values),
+            j2_values=_csv_floats(args.j2_values),
+            h_values=_csv_floats(args.h_values),
+            output_dir=args.output,
+            thresholds=parse_thresholds(args.thresholds),
+        )
+        return
+    if args.command == "parameter-confusion":
+        base = SpinRunConfig().normalized() if not args.config else load_spin_runspec(args.config)
+        base = replace(
+            base,
+            optimizer=args.optimizer,
+            shots=args.shots,
+            evaluation_budget=args.evaluation_budget,
+            boundary=args.boundary,
+        ).normalized()
+        run_parameter_confusion_study(
+            base_cfg=base,
+            n_spins=args.n_spins,
+            p_values=_csv_ints(args.p_values),
+            regimes=_csv_strings(args.regimes),
+            output_dir=args.output,
+        )
+        return
+    if args.command == "resolution-cost":
+        records = load_resolution_records_csv(args.input)
+        write_resolution_cost_report(records, thresholds=parse_thresholds(args.thresholds), output_dir=args.output)
+        return
+    parser.error(f"Unsupported command: {args.command}")
+
+
 def main() -> None:
+    argv = sys.argv[1:]
+    if argv and argv[0] in {"p-sweep", "parameter-confusion", "resolution-cost"}:
+        _run_spin_cli(argv)
+        return
+
     parser = build_parser()
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.test:
         run_smoke_test()
         return
@@ -124,4 +236,4 @@ if __name__ == "__main__":
     main()
 
 
-__all__ = ['build_parser', 'main']
+__all__ = ["build_parser", "build_spin_parser", "main"]

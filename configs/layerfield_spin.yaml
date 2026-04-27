@@ -1,0 +1,17 @@
+n_spins: 8
+p_layers: 3
+j1: 1.0
+j2: 0.3
+transverse_field: 1.0
+disorder_strength: 0.0
+boundary: open
+regime: frustrated
+mixer_type: x
+ansatz_family: standard_qaoa
+optimizer: spsa
+evaluation_budget: 40
+seeds: 4
+shots: 1024
+seed: 42
+exact_reference_max_spins: 12
+output_prefix: results/p_layer_geometry/example_run/layerfield_qaoa

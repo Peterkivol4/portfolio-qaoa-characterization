@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+
+- Added a spin-physics subsystem for studying QAOA depth as a physical resolution limit on J1-J2 transverse-field Ising Hamiltonians.
+- Added `SpinRunConfig`, dense Hamiltonian construction, exact diagonalization, physical observable recovery metrics, and p-layer resolution records.
+- Added `p-sweep`, `parameter-confusion`, and `resolution-cost` CLI commands plus the `layerfield-qaoa` console-script alias.
+- Added new spin-study docs and tests covering Hamiltonian shape, Hermiticity, exact limits, observable bounds, and p-resolution artifact generation.
+
 ## 0.3.0
 
 - Established the regime-aware QAOA benchmark pipeline, suite reporting, plotting, and backend-aware execution paths.

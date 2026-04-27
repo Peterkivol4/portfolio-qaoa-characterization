@@ -26,6 +26,18 @@ from .constants import (
 )
 
 VALID_SUITE_STUDY_MODES = {"independent", "factorial"}
+VALID_SPIN_BOUNDARIES = {"open", "periodic"}
+VALID_SPIN_REGIMES = {
+    "ferromagnetic",
+    "near_critical",
+    "frustrated",
+    "strong_field",
+    "disordered",
+    "mixed_frustrated_disordered",
+}
+VALID_SPIN_ANSATZ_FAMILIES = {"standard_qaoa"}
+VALID_SPIN_MIXERS = {"x"}
+VALID_SPIN_OPTIMIZERS = {"random", "spsa", "bayesian_optimization"}
 
 
 @dataclass
@@ -225,7 +237,65 @@ class SuiteConfig:
     study_mode: str = "independent"
 
 
+@dataclass
+class SpinRunConfig:
+    """Configuration for p-layer geometry studies on frustrated spin Hamiltonians."""
+
+    n_spins: int = 8
+    p_layers: int = 3
+
+    j1: float = 1.0
+    j2: float = 0.0
+    transverse_field: float = 1.0
+    disorder_strength: float = 0.0
+    boundary: str = "open"
+    regime: str = "near_critical"
+
+    mixer_type: str = "x"
+    ansatz_family: str = "standard_qaoa"
+    optimizer: str = "spsa"
+    evaluation_budget: int = 80
+    seeds: int = 10
+    shots: int = 4096
+    seed: int = 42
+
+    exact_reference_max_spins: int = 12
+    output_prefix: str = "layerfield_qaoa"
+
+    def validate(self) -> None:
+        if self.n_spins <= 0:
+            raise ValueError("n_spins must be positive.")
+        if self.p_layers <= 0:
+            raise ValueError("p_layers must be positive.")
+        if self.evaluation_budget <= 0:
+            raise ValueError("evaluation_budget must be positive.")
+        if self.seeds <= 0:
+            raise ValueError("seeds must be positive.")
+        if self.shots <= 0:
+            raise ValueError("shots must be positive.")
+        if self.boundary not in VALID_SPIN_BOUNDARIES:
+            raise ValueError(f"boundary must be one of {sorted(VALID_SPIN_BOUNDARIES)}.")
+        if self.regime not in VALID_SPIN_REGIMES:
+            raise ValueError(f"regime must be one of {sorted(VALID_SPIN_REGIMES)}.")
+        if self.mixer_type not in VALID_SPIN_MIXERS:
+            raise ValueError(f"mixer_type must be one of {sorted(VALID_SPIN_MIXERS)}.")
+        if self.ansatz_family not in VALID_SPIN_ANSATZ_FAMILIES:
+            raise ValueError(f"ansatz_family must be one of {sorted(VALID_SPIN_ANSATZ_FAMILIES)}.")
+        if self.optimizer not in VALID_SPIN_OPTIMIZERS:
+            raise ValueError(f"optimizer must be one of {sorted(VALID_SPIN_OPTIMIZERS)}.")
+        if self.exact_reference_max_spins <= 0:
+            raise ValueError("exact_reference_max_spins must be positive.")
+
+    def normalized(self) -> "SpinRunConfig":
+        self.validate()
+        return self
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
 _RUN_CONFIG_FIELDS = {field.name for field in fields(RunConfig)}
+_SPIN_RUN_CONFIG_FIELDS = {field.name for field in fields(SpinRunConfig)}
 
 
 def apply_overrides(cfg: RunConfig, overrides: dict[str, Any]) -> RunConfig:
@@ -280,6 +350,23 @@ def load_suite_spec(path: str | Path) -> SuiteConfig:
     )
 
 
+def apply_spin_overrides(cfg: SpinRunConfig, overrides: dict[str, Any]) -> SpinRunConfig:
+    """Return a normalized copy of ``cfg`` with spin-study YAML/CLI overrides applied."""
+
+    unknown = sorted(set(overrides) - _SPIN_RUN_CONFIG_FIELDS)
+    if unknown:
+        raise KeyError(f"Unknown SpinRunConfig fields: {unknown}")
+    updated = replace(cfg, **dict(overrides)).normalized()
+    return updated
+
+
+def load_spin_runspec(path: str | Path) -> SpinRunConfig:
+    """Load a spin-study YAML config from disk."""
+
+    payload = yaml.safe_load(Path(path).read_text()) or {}
+    return apply_spin_overrides(SpinRunConfig(), payload)
+
+
 RunSpec = RunConfig
 SuiteSpec = SuiteConfig
 
@@ -298,10 +385,18 @@ __all__ = [
     'VALID_MIXER_TYPES',
     'RunConfig',
     'SuiteConfig',
+    'SpinRunConfig',
     'RunSpec',
     'SuiteSpec',
     'VALID_SUITE_STUDY_MODES',
+    'VALID_SPIN_BOUNDARIES',
+    'VALID_SPIN_REGIMES',
+    'VALID_SPIN_ANSATZ_FAMILIES',
+    'VALID_SPIN_MIXERS',
+    'VALID_SPIN_OPTIMIZERS',
     'apply_overrides',
+    'apply_spin_overrides',
     'load_runspec',
+    'load_spin_runspec',
     'load_suite_spec',
 ]
