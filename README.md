@@ -2,7 +2,34 @@
 
 LayerField QAOA studies finite-depth QAOA as a physical resolution limit rather than a generic approximation-ratio benchmark. The central question is not only whether the variational energy improves with depth `p`, but when additional layers begin to represent physically distinct Hamiltonian effects separately instead of compressing them into distorted QAOA angles.
 
-The repo is currently in transition: the package path remains `portfolio_qaoa_bench` so the existing benchmark engine, scripts, and monolith tooling keep working, while the new spin-physics subsystem is promoted to the main scientific identity.
+The primary package surface is now `layerfield_qaoa`. A legacy portfolio-benchmark path remains inside the repository for compatibility and regression testing, but it is no longer the main scientific identity of the project.
+
+If you want the less-polished version of how this changed shape, read [RESEARCH_JOURNAL.md](RESEARCH_JOURNAL.md).
+
+This is the repo where the rest of the portfolio really started. I built [FieldLine VQE](https://github.com/Peterkivol4/Tfim-vqe-symmetry-bench) after this one made me realise that low energy was not the same thing as the right physical state. I built [SpinMesh Runtime](https://github.com/Peterkivol4/Runtime-Aware-QAOA-for-Constrained-J1-J2-Ising-Ground-State-Search) once it became obvious that execution conditions could deform the conclusion as much as the ansatz did. I built [TeleportDim](https://github.com/Peterkivol4/Teleportdim-hardware-study) when I wanted one cleaner place to hold the hardware fixed and study deformation directly.
+
+## Concrete Example
+
+On an 8-spin open chain with `J1 = 1.0`, `h = 1.0`, zero disorder, and frustration changed from `J2 = 0.3` to `J2 = 0.5`, shallow QAOA still treats the two Hamiltonians as only weakly separated. Over four SPSA seeds with evaluation budget `60`, the mean optimized-angle distance is only `0.5446` at `p = 1`, while mean fidelities stay low for both cases (`0.0302` and `0.0285`) and next-nearest-neighbor correlation errors remain large (`0.7191` and `0.8059`). At `p = 3`, the mean optimized-angle distance rises to `1.8861`, the `J2 = 0.5` mean fidelity rises to `0.1970`, and the two cases stop looking like the same shallow response. That is the repo’s main idea in miniature: low depth can reduce energy while still blurring the physical source of that energy.
+
+See [results/p_layer_geometry/j2_resolution_example.md](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/results/p_layer_geometry/j2_resolution_example.md) for the per-seed table behind this example.
+
+## Resolution Sketch
+
+```text
+physical parameter axis
+
+J2 = 0.3 ----------------------------- J2 = 0.5
+
+p = 1  angle space
+            [ one broad shallow basin ]
+                 ^ both cases land near here
+
+p = 3  angle space
+        [ basin for J2=0.3 ]     [ basin for J2=0.5 ]
+                 ^                          ^
+           separable response         separable response
+```
 
 ## One-Sentence Thesis
 
@@ -57,7 +84,7 @@ The intended result is not “higher `p` gets lower energy.” The stronger clai
 ## What This Is Not
 
 - not a quantum-advantage claim
-- not a finance optimizer paper, even though the legacy benchmark engine is still present in the codebase
+- not a finance optimizer paper
 - not only an approximation-ratio benchmark
 - not a claim that one classical outer-loop optimizer universally dominates
 - not a guarantee that practical optimization improves monotonically with `p`
@@ -115,19 +142,17 @@ layerfield-qaoa resolution-cost \
   --output results/p_layer_geometry/resolution_cost
 ```
 
-The CLI currently lives in `portfolio_qaoa_bench.cli`; `layerfield-qaoa` is the new user-facing entry point added on top of the existing package.
-
 ## Repository Layout
 
-- [`src/portfolio_qaoa_bench/spin_hamiltonian.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/spin_hamiltonian.py): dense `J1-J2-h-epsilon` Hamiltonian construction and regime presets
-- [`src/portfolio_qaoa_bench/exact_diagonalization.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/exact_diagonalization.py): exact reference spectra and states
-- [`src/portfolio_qaoa_bench/physical_observables.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/physical_observables.py): magnetization, correlation, structure-factor, and entanglement diagnostics
-- [`src/portfolio_qaoa_bench/p_layer_geometry.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/p_layer_geometry.py): ansatz state construction, optimization, and `PLayerResolutionRecord`
-- [`src/portfolio_qaoa_bench/parameter_emergence.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/parameter_emergence.py): angle-space geometry and confusion metrics
-- [`src/portfolio_qaoa_bench/phase_maps.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/src/portfolio_qaoa_bench/phase_maps.py): study orchestration and report emission
-- [`configs/layerfield_spin.yaml`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/configs/layerfield_spin.yaml): example spin-study configuration
-- [`tests/test_spin_physics.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/tests/test_spin_physics.py): Hamiltonian, observables, ansatz, reporting, and CLI regression tests
-- [`monolith-full/portfolio_qaoa_bench_monolith.py`](/Users/hirrreshsundrq/Documents/New%20project/portfolio_qaoa_bench_repo/monolith-full/portfolio_qaoa_bench_monolith.py): synchronized single-file snapshot of the repo implementation
+- [`src/layerfield_qaoa/spin_hamiltonian.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/spin_hamiltonian.py): dense `J1-J2-h-epsilon` Hamiltonian construction and regime presets
+- [`src/layerfield_qaoa/exact_diagonalization.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/exact_diagonalization.py): exact reference spectra and states
+- [`src/layerfield_qaoa/physical_observables.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/physical_observables.py): magnetization, correlation, structure-factor, and entanglement diagnostics
+- [`src/layerfield_qaoa/p_layer_geometry.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/p_layer_geometry.py): ansatz state construction, optimization, and `PLayerResolutionRecord`
+- [`src/layerfield_qaoa/parameter_emergence.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/parameter_emergence.py): angle-space geometry and confusion metrics
+- [`src/layerfield_qaoa/phase_maps.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/phase_maps.py): study orchestration and report emission
+- [`configs/layerfield_spin.yaml`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/configs/layerfield_spin.yaml): example spin-study configuration
+- [`tests/test_spin_physics.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/tests/test_spin_physics.py): Hamiltonian, observables, ansatz, reporting, and CLI regression tests
+- [`monolith-full/layerfield_qaoa_monolith.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/monolith-full/layerfield_qaoa_monolith.py): synchronized single-file snapshot of the repo implementation
 
 ## Current Limitations
 
@@ -135,7 +160,7 @@ The CLI currently lives in `portfolio_qaoa_bench.cli`; `layerfield-qaoa` is the 
 - The spin subsystem currently uses dense linear algebra rather than tensor-network or sparse-Krylov backends.
 - Practical optimizer performance can worsen with `p` even when the formal variational family grows.
 - No claim is made here about universal phase identification, universal parameter transfer, or hardware advantage.
-- The legacy portfolio-benchmark code still exists in the repository for backward compatibility while the spin-physics path matures.
+- A legacy portfolio-benchmark engine still exists in the repository for backward compatibility and regression coverage.
 
 ## Immediate Research Program
 
@@ -147,4 +172,4 @@ The CLI currently lives in `portfolio_qaoa_bench.cli`; `layerfield-qaoa` is the 
 
 ## Legacy Note
 
-This repository started as a runtime-aware QAOA benchmarking engine in a different application domain. That infrastructure is being reused rather than discarded. The current scientific direction is the spin-physics program described above; the older portfolio path is retained temporarily for backward compatibility while the new studies mature.
+This repository started as a runtime-aware QAOA benchmarking engine in a different application domain. That infrastructure is being reused rather than discarded. The current scientific direction is the spin-physics program described above; the older portfolio path is retained only as a legacy compatibility surface.
