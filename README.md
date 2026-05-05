@@ -12,7 +12,7 @@ This is the repo where the rest of the portfolio really started. I built [FieldL
 
 On an 8-spin open chain with `J1 = 1.0`, `h = 1.0`, zero disorder, and frustration changed from `J2 = 0.3` to `J2 = 0.5`, shallow QAOA still treats the two Hamiltonians as only weakly separated. Over four SPSA seeds with evaluation budget `60`, the mean optimized-angle distance is only `0.5446` at `p = 1`, while mean fidelities stay low for both cases (`0.0302` and `0.0285`) and next-nearest-neighbor correlation errors remain large (`0.7191` and `0.8059`). At `p = 3`, the mean optimized-angle distance rises to `1.8861`, the `J2 = 0.5` mean fidelity rises to `0.1970`, and the two cases stop looking like the same shallow response. That is the repo’s main idea in miniature: low depth can reduce energy while still blurring the physical source of that energy.
 
-See [results/p_layer_geometry/j2_resolution_example.md](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/results/p_layer_geometry/j2_resolution_example.md) for the per-seed table behind this example.
+See [results/p_layer_geometry/j2_resolution_example.md](results/p_layer_geometry/j2_resolution_example.md) for the per-seed table behind this example.
 
 ## Resolution Sketch
 
@@ -144,15 +144,15 @@ layerfield-qaoa resolution-cost \
 
 ## Repository Layout
 
-- [`src/layerfield_qaoa/spin_hamiltonian.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/spin_hamiltonian.py): dense `J1-J2-h-epsilon` Hamiltonian construction and regime presets
-- [`src/layerfield_qaoa/exact_diagonalization.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/exact_diagonalization.py): exact reference spectra and states
-- [`src/layerfield_qaoa/physical_observables.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/physical_observables.py): magnetization, correlation, structure-factor, and entanglement diagnostics
-- [`src/layerfield_qaoa/p_layer_geometry.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/p_layer_geometry.py): ansatz state construction, optimization, and `PLayerResolutionRecord`
-- [`src/layerfield_qaoa/parameter_emergence.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/parameter_emergence.py): angle-space geometry and confusion metrics
-- [`src/layerfield_qaoa/phase_maps.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/src/layerfield_qaoa/phase_maps.py): study orchestration and report emission
-- [`configs/layerfield_spin.yaml`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/configs/layerfield_spin.yaml): example spin-study configuration
-- [`tests/test_spin_physics.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/tests/test_spin_physics.py): Hamiltonian, observables, ansatz, reporting, and CLI regression tests
-- [`monolith-full/layerfield_qaoa_monolith.py`](/Users/hirrreshsundrq/Documents/New%20project/layerfield_qaoa_repo/monolith-full/layerfield_qaoa_monolith.py): synchronized single-file snapshot of the repo implementation
+- [`src/layerfield_qaoa/spin_hamiltonian.py`](src/layerfield_qaoa/spin_hamiltonian.py): dense `J1-J2-h-epsilon` Hamiltonian construction and regime presets
+- [`src/layerfield_qaoa/exact_diagonalization.py`](src/layerfield_qaoa/exact_diagonalization.py): exact reference spectra and states
+- [`src/layerfield_qaoa/physical_observables.py`](src/layerfield_qaoa/physical_observables.py): magnetization, correlation, structure-factor, and entanglement diagnostics
+- [`src/layerfield_qaoa/p_layer_geometry.py`](src/layerfield_qaoa/p_layer_geometry.py): ansatz state construction, optimization, and `PLayerResolutionRecord`
+- [`src/layerfield_qaoa/parameter_emergence.py`](src/layerfield_qaoa/parameter_emergence.py): angle-space geometry and confusion metrics
+- [`src/layerfield_qaoa/phase_maps.py`](src/layerfield_qaoa/phase_maps.py): study orchestration and report emission
+- [`configs/layerfield_spin.yaml`](configs/layerfield_spin.yaml): example spin-study configuration
+- [`tests/test_spin_physics.py`](tests/test_spin_physics.py): Hamiltonian, observables, ansatz, reporting, and CLI regression tests
+- [`monolith-full/layerfield_qaoa_monolith.py`](monolith-full/layerfield_qaoa_monolith.py): synchronized single-file snapshot of the repo implementation
 
 ## Current Limitations
 
