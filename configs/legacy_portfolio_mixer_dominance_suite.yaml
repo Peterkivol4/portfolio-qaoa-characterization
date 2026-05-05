@@ -1,5 +1,6 @@
-title: Portfolio QAOA characterisation suite
-output_dir: results/multi_regime_suite
+title: Legacy Portfolio Mixer Dominance Compatibility Suite
+output_dir: results/legacy_portfolio/mixer_dominance_suite
+study_mode: factorial
 base:
   n_assets: 8
   budget: 3
@@ -27,25 +28,13 @@ seeds: [1, 2, 3]
 studies:
   - name: regime
     key: regime
-    values: [baseline, low_correlation, high_correlation, sparse_covariance, clustered_assets, hard_budget]
+    values: [baseline, clustered_assets, hard_budget]
   - name: asset_scale
     key: n_assets
     values: [6, 8, 10, 12]
-  - name: shot_budget
-    key: shots
-    values: [128, 512, 2048]
-  - name: circuit_depth
-    key: p_layers
-    values: [1, 2, 3, 4]
-  - name: mixer_comparison
+  - name: mixer
     key: mixer_type
     values: [xy, product_x]
-  - name: eval_budget
-    key: evaluation_budget
-    values: [8, 12, 20]
-  - name: cvar_alpha
-    key: cvar_alpha
-    values: [0.05, 0.1, 0.2]
-  - name: invalid_penalty
-    key: invalid_penalty
-    values: [20.0, 50.0, 100.0]
+  - name: two_qubit_noise
+    key: depolarizing_strength_2q
+    values: [0.001, 0.005, 0.01, 0.02]

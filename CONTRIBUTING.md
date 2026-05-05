@@ -1,34 +1,32 @@
 # Contributing
 
-## Add a new benchmark regime
+## Add a new spin regime
 
-1. Add the regime name to `VALID_REGIMES` in `src/portfolio_qaoa_bench/config.py`.
-2. Implement the generator in `src/portfolio_qaoa_bench/data.py`.
-3. Route the regime through `SyntheticMarket.build()`.
-4. Add at least one randomized property-style test in `tests/test_data_and_qubo.py`.
-5. If the regime is intended for suites, add it to the relevant YAML study list.
+1. Add the regime name to `VALID_SPIN_REGIMES` in `src/layerfield_qaoa/config.py`.
+2. Implement the preset or parameter mapping in `src/layerfield_qaoa/spin_hamiltonian.py`.
+3. Make sure the regime can be exercised through `run_single_spin_instance()` or the sweep helpers in `phase_maps.py`.
+4. Add at least one regression test in `tests/test_spin_physics.py`.
+5. If the regime is intended for examples, add it to the relevant spin-study YAML or script entry point.
 
-## Add a new optimizer
+## Add a new physics metric
 
-1. Add `run_<optimizer>_search(...)` to `src/portfolio_qaoa_bench/optimizers.py`.
-2. Populate results through `_TraceBuffer` so all exports stay consistent.
-3. Make sure optimizer overhead is accounted for in `TimingBreakdown`.
-4. Register the optimizer in `run_benchmark()`.
-5. Add fallback / mocking tests if the optimizer depends on optional libraries.
+1. Implement the observable or diagnostic in `src/layerfield_qaoa/physical_observables.py` or `src/layerfield_qaoa/parameter_emergence.py`.
+2. Surface it through `PLayerResolutionRecord` in `src/layerfield_qaoa/p_layer_geometry.py`.
+3. Include it in the relevant report writer in `src/layerfield_qaoa/phase_maps.py`.
+4. Add bounds or sanity tests in `tests/test_spin_physics.py`.
 
-## Preserve benchmark realism
+## Add or modify an optimizer
 
-When modifying runtime paths, preserve:
-- topology-aware transpilation
-- seed propagation into the transpiler
-- job-vs-session billing semantics
-- queue latency behavior in job mode
-- mitigation shot multipliers and cost accounting
-- calibration-aware proxy statistics when heavy-hex routing is used
+1. If the optimizer is for the spin-physics path, integrate it through `optimize_spin_qaoa()` in `src/layerfield_qaoa/p_layer_geometry.py`.
+2. If the optimizer touches the legacy compatibility benchmark, keep its accounting wired through `TimingBreakdown`.
+3. Add fallback or mocking tests if the optimizer depends on optional libraries.
+4. Preserve deterministic seed handling.
 
-## Preserve BO periodicity
+## Preserve experiment realism
 
-QAOA angles are periodic. If you modify the surrogate layer:
-- keep parameters inside valid bounds
-- preserve the periodic feature handling for sklearn fallback
-- do not regress the high-dimensional random-embedding path
+When modifying execution or reporting paths:
+- keep QAOA angle periodicity intact
+- preserve exact-reference limits and warnings
+- preserve runtime/cost accounting semantics
+- keep monolith generation in sync
+- distinguish spin-primary features from legacy compatibility code in docs and comments

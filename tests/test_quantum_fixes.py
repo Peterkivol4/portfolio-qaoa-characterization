@@ -2,12 +2,12 @@ import numpy as np
 import pytest
 import warnings
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.data import SyntheticMarket
-from portfolio_qaoa_bench.objective import make_bounds
-from portfolio_qaoa_bench.optimizers import BayesianOptimizer
-from portfolio_qaoa_bench.qubo import QuboFactory
-import portfolio_qaoa_bench.simulator as sim
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.data import SyntheticMarket
+from layerfield_qaoa.objective import make_bounds
+from layerfield_qaoa.optimizers import BayesianOptimizer
+from layerfield_qaoa.qubo import QuboFactory
+import layerfield_qaoa.simulator as sim
 
 
 @pytest.mark.parametrize("regime", ["baseline", "low_correlation", "high_correlation", "sparse_covariance", "clustered_assets", "hard_budget"])
@@ -100,7 +100,7 @@ def test_zne_requires_aer_backend_name() -> None:
 
 def test_sklearn_surrogate_warm_starts_kernel(monkeypatch) -> None:
     monkeypatch.setattr(sim, "SingleTaskGP", None, raising=False)
-    import portfolio_qaoa_bench.optimizers as opt
+    import layerfield_qaoa.optimizers as opt
 
     monkeypatch.setattr(opt, "SingleTaskGP", None)
     cfg = RunConfig(n_assets=6, budget=2, n_init_points=2, evaluation_budget=4).normalized()

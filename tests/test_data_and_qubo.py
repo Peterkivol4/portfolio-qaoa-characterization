@@ -1,8 +1,8 @@
 import numpy as np
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.data import SyntheticMarket
-from portfolio_qaoa_bench.qubo import QuboFactory
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.data import SyntheticMarket
+from layerfield_qaoa.qubo import QuboFactory
 
 
 def test_regimes_are_psd_and_shapes_match() -> None:

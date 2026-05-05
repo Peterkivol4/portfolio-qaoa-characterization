@@ -3,8 +3,8 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "portfolio-qaoa-bench"
-version = "0.5.0"
+name = "layerfield-qaoa"
+version = "0.6.0"
 description = "QAOA depth studies for frustrated spin Hamiltonians and p-layer physical-resolution analysis"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -32,8 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-portfolio-qaoa-bench = "portfolio_qaoa_bench.cli:main"
-layerfield-qaoa = "portfolio_qaoa_bench.cli:main"
+layerfield-qaoa = "layerfield_qaoa.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

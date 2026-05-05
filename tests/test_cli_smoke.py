@@ -12,7 +12,7 @@ def test_cli_smoke_test_subprocess(tmp_path: Path) -> None:
         "PYTHONPATH": str(root / "src"),
     }
     result = subprocess.run(
-        [sys.executable, "-m", "portfolio_qaoa_bench.cli", "--test"],
+        [sys.executable, "-m", "layerfield_qaoa.cli", "--test"],
         cwd=root,
         env=env,
         capture_output=True,

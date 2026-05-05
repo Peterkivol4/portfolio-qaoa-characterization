@@ -168,7 +168,7 @@ def run_smoke_test() -> None:
             evaluation_budget=4,
             n_init_points=2,
             shots=128,
-            output_prefix="smoke_portfolio_qaoa/smoke_run",
+            output_prefix="smoke_layerfield_qaoa/smoke_run",
         ).normalized(),
         verbose=False,
     )

@@ -1608,7 +1608,7 @@ wheels = [
 ]
 
 [[package]]
-name = "portfolio-qaoa-bench"
+name = "layerfield-qaoa"
 version = "0.3.0"
 source = { editable = "." }
 dependencies = [

@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.data import SyntheticMarket
-from portfolio_qaoa_bench.objective import make_bounds
-from portfolio_qaoa_bench.optimizers import (
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.data import SyntheticMarket
+from layerfield_qaoa.objective import make_bounds
+from layerfield_qaoa.optimizers import (
     BayesianOptimizer,
     _periodic_feature_map,
     run_bayesian_search,
@@ -12,8 +12,8 @@ from portfolio_qaoa_bench.optimizers import (
     run_random_search,
     run_spsa_search,
 )
-from portfolio_qaoa_bench.qubo import QuboFactory
-from portfolio_qaoa_bench.simulator import build_executor
+from layerfield_qaoa.qubo import QuboFactory
+from layerfield_qaoa.simulator import build_executor
 
 
 def test_periodic_feature_map_respects_boundary_equivalence() -> None:
@@ -27,7 +27,7 @@ def test_periodic_feature_map_respects_boundary_equivalence() -> None:
 
 
 def test_surrogate_loop_uses_sklearn_after_initial_design(monkeypatch) -> None:
-    import portfolio_qaoa_bench.optimizers as opt
+    import layerfield_qaoa.optimizers as opt
 
     monkeypatch.setattr(opt, "SingleTaskGP", None)
     cfg = RunConfig(n_assets=6, budget=2, n_init_points=2, evaluation_budget=4).normalized()

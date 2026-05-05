@@ -4,12 +4,12 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from portfolio_qaoa_bench.config import RunConfig, SuiteConfig
-from portfolio_qaoa_bench.objective import project_params
-from portfolio_qaoa_bench.pipeline import run_benchmark, run_suite
-from portfolio_qaoa_bench.plotting import plot_mixer_crossover, plot_results, plot_suite_dashboard
-from portfolio_qaoa_bench.qubo import QuboFactory
-from portfolio_qaoa_bench.reporting import (
+from layerfield_qaoa.config import RunConfig, SuiteConfig
+from layerfield_qaoa.objective import project_params
+from layerfield_qaoa.pipeline import run_benchmark, run_suite
+from layerfield_qaoa.plotting import plot_mixer_crossover, plot_results, plot_suite_dashboard
+from layerfield_qaoa.qubo import QuboFactory
+from layerfield_qaoa.reporting import (
     aggregate_mixer_dominance_rows,
     aggregate_suite_rows,
     build_mixer_dominance_rows,
@@ -22,7 +22,7 @@ from portfolio_qaoa_bench.reporting import (
     generate_suite_research_summary,
     write_markdown_report,
 )
-from portfolio_qaoa_bench.results import SearchTrace, TimingBreakdown
+from layerfield_qaoa.results import SearchTrace, TimingBreakdown
 
 
 def _dummy_trace(method: str) -> SearchTrace:
@@ -148,7 +148,7 @@ def test_measurement_mitigation_guard_rejects_large_bitcount() -> None:
 
 
 def test_measurement_mitigation_falls_back_when_linear_algebra_fails(monkeypatch) -> None:
-    import portfolio_qaoa_bench.simulator as sim
+    import layerfield_qaoa.simulator as sim
 
     cfg = RunConfig(measurement_mitigation=True, measurement_error=0.01).normalized()
     counts = {"00": 40, "11": 24}
@@ -171,7 +171,7 @@ def test_degenerate_covariance_is_supported() -> None:
 
 
 def test_run_benchmark_does_not_touch_global_numpy_seed(monkeypatch, tmp_path: Path) -> None:
-    import portfolio_qaoa_bench.pipeline as pipeline
+    import layerfield_qaoa.pipeline as pipeline
 
     def _raise(*args, **kwargs):
         raise AssertionError("global np.random.seed should not be called")

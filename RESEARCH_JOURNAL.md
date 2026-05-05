@@ -1,21 +1,21 @@
 # Research Journal
 
-## 2026-02-08
+## 2026-02-24
 
-I originally treated this as a broader QAOA benchmark and kept asking whether deeper circuits gave better numbers. The plots were not useless, but they felt generic. I could tell I was not asking a question that would survive a hard follow-up.
+I started from the older portfolio-QAOA machinery because it already had the optimizer and reporting pieces I needed. What broke almost immediately was the story. I could make the code run, but I could not explain what a better result meant physically.
 
-## 2026-02-20
+## 2026-03-08
 
-The turning point was noticing that low-depth runs could reduce energy while still confusing frustration, field strength, and disorder. That was the moment I stopped thinking about `p` as just a knob and started treating it as a physical resolution limit.
+The first `J1-J2` runs made the direction clearer. Low-depth QAOA would improve the energy and still leave `J2 = 0.3` and `J2 = 0.5` looking too similar in the learned angles and correlation errors. That was the point where `p` stopped feeling like “more layers” and started feeling like a resolution limit.
 
-## 2026-03-06
+## 2026-03-22
 
-The repo was still carrying too much of the older portfolio-benchmark identity, which made the scientific center feel blurry. I kept the legacy path for compatibility, but I renamed the package surface and let the spin-chain question become the actual headline.
+I tried to preserve the old public identity for too long. The code still worked, but the README kept spending its first paragraphs apologising for being a portfolio benchmark that was no longer about portfolios. Renaming the package to `layerfield_qaoa` fixed that mismatch.
 
-## 2026-04-03
+## 2026-04-16
 
-I spent more time than I expected on parameter-confusion outputs because they were the first artifacts that felt genuinely diagnostic rather than decorative. They gave me a way to say not just that shallow QAOA was worse, but what it was still failing to separate.
+I needed one example that made the whole idea concrete without a long abstract. The `J2 = 0.3` versus `J2 = 0.5` case became that anchor because `p = 1` still looks confused while `p = 3` starts to separate the two regimes in a way you can actually point at.
 
 ## 2026-05-05
 
-Looking back, this is the repo that forced the rest of the work to become more honest. Once I saw that depth could hide unresolved physics here, it became much harder to accept clean-looking variational results anywhere else without asking what they were still confounding.
+I added the journal and the cross-repo notes because the repos finally read like one research thread instead of four unrelated dumps. LayerField is where the “what is this circuit actually resolving?” question started, and the other three only make sense if that part is visible.

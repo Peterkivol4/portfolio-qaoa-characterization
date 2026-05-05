@@ -48,7 +48,7 @@ def plot_results(traces: dict[str, SearchTrace], prefix: Path) -> None:
     axes[0, 0].set_title("Best-so-far CVaR objective")
     axes[0, 1].set_title("Simple regret")
     axes[1, 0].set_title("Cumulative regret")
-    axes[1, 1].set_title("Best valid portfolio energy")
+    axes[1, 1].set_title("Best valid energy")
     axes[2, 0].set_title("Valid ratio over time")
     axes[2, 1].set_title("Objective variance over time")
 

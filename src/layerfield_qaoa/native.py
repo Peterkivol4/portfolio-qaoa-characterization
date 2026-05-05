@@ -11,8 +11,8 @@ import numpy as np
 
 _LIB = None
 _LIB_STATE = "untried"
-_ENABLE_ENV = "PORTFOLIO_QAOA_NATIVE"
-_DISABLE_ENV = "PORTFOLIO_QAOA_NATIVE_DISABLE"
+_ENABLE_ENV = "LAYERFIELD_QAOA_NATIVE"
+_DISABLE_ENV = "LAYERFIELD_QAOA_NATIVE_DISABLE"
 _C_SRC = r"""
 #include <math.h>
 #include <stdint.h>
@@ -149,7 +149,7 @@ def _load_library():
     _LIB_STATE = "unavailable"
     if not _native_requested():
         return None
-    cache_dir = Path(tempfile.gettempdir()) / "portfolio_qaoa_bench_native"
+    cache_dir = Path(tempfile.gettempdir()) / "layerfield_qaoa_native"
     so_path = cache_dir / _lib_name()
     if not so_path.exists():
         built = _compile_shared(cache_dir)

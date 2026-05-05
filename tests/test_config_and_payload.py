@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from portfolio_qaoa_bench.cli import build_parser
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.constants import PAYLOAD_SCHEMA_VERSION, RESEARCH_QUESTION
-from portfolio_qaoa_bench.reporting import build_run_payload
-from portfolio_qaoa_bench.results import EvaluationRecord, SearchTrace, TimingBreakdown
+from layerfield_qaoa.cli import build_parser
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.constants import PAYLOAD_SCHEMA_VERSION, RESEARCH_QUESTION
+from layerfield_qaoa.reporting import build_run_payload
+from layerfield_qaoa.results import EvaluationRecord, SearchTrace, TimingBreakdown
 
 
 def _dummy_trace(method: str) -> SearchTrace:

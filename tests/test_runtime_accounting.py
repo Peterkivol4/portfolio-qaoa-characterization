@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.pipeline import run_benchmark
-from portfolio_qaoa_bench.results import TimingBreakdown
-from portfolio_qaoa_bench.simulator import _apply_job_queue_latency, _estimate_billed_seconds, _mock_calibration_metrics
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.pipeline import run_benchmark
+from layerfield_qaoa.results import TimingBreakdown
+from layerfield_qaoa.simulator import _apply_job_queue_latency, _estimate_billed_seconds, _mock_calibration_metrics
 
 
 class _FakeTranspiled:

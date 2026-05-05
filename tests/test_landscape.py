@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.data import SyntheticMarket
-from portfolio_qaoa_bench.landscape import constraint_hardness, feasibility_subspace_size, profile_instance
-from portfolio_qaoa_bench.qubo import QuboFactory
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.data import SyntheticMarket
+from layerfield_qaoa.landscape import constraint_hardness, feasibility_subspace_size, profile_instance
+from layerfield_qaoa.qubo import QuboFactory
 
 
 def test_constraint_hardness_matches_subspace_fraction() -> None:

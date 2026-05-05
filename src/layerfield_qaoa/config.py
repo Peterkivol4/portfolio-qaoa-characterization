@@ -42,7 +42,7 @@ VALID_SPIN_OPTIMIZERS = {"random", "spsa", "bayesian_optimization"}
 
 @dataclass
 class RunConfig:
-    """Configuration for one portfolio-QAOA characterisation run."""
+    """Configuration for one legacy portfolio-QAOA compatibility run."""
 
     n_assets: int = 10
     budget: int = 4
@@ -54,7 +54,7 @@ class RunConfig:
     cvar_alpha: float = 0.1
     invalid_penalty: float = 50.0
     seed: int = 42
-    output_prefix: str = "portfolio_qaoa_bench"
+    output_prefix: str = "legacy_portfolio_qaoa"
 
     regime: str = "baseline"
 

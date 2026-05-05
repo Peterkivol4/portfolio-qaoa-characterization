@@ -213,7 +213,7 @@ def generate_single_run_insights(cfg: RunSpec, instance: PortfolioInstance, trac
 
     if cfg.bo_target == "feasibility_aware":
         insights.append(
-            "The BO path was configured with a feasibility-aware target, so the benchmark explicitly tests whether sophisticated search is learning portfolio quality or just surfing penalty walls."
+            "The BO path was configured with a feasibility-aware target, so the legacy benchmark explicitly tests whether sophisticated search is learning portfolio quality or just surfing penalty walls."
         )
 
     if cfg.execution_mode != "fast_simulator":
@@ -228,10 +228,10 @@ def generate_project_positioning(cfg: RunSpec) -> dict[str, Any]:
     return {
         "research_question": RESEARCH_QUESTION,
         "what_this_project_is": (
-            "A hardware-aware benchmark platform for constrained QAOA portfolio optimization rather than a one-off demo or toy VQE script."
+            "A retained hardware-aware legacy benchmark for constrained QAOA portfolio optimization rather than the primary spin-physics study surface."
         ),
         "technical_contributions": [
-            "Multi-regime synthetic portfolio generator with exact feasible references on small instances.",
+            "Legacy multi-regime synthetic portfolio generator with exact feasible references on small instances.",
             "Constraint-aware QAOA benchmark with CVaR-style objectives, feasibility tracking, and valid-ratio histories.",
             "Strict runtime accounting across objective calls, effective shots, transpilation time, execution time, queue latency, and estimated billed QPU cost.",
             "Fair optimizer comparison across a classical Markowitz baseline, Random Search, SPSA, and Bayesian Optimization with periodic-safe surrogate handling for QAOA angles.",
@@ -919,7 +919,7 @@ def generate_suite_research_summary(rows: list[dict[str, Any]]) -> dict[str, Any
         "research_question": RESEARCH_QUESTION,
         "headline_answer": headline,
         "contributions_demonstrated": [
-            "Constraint-aware QAOA benchmarking across multiple synthetic portfolio regimes.",
+            "Legacy constraint-aware QAOA benchmarking across multiple synthetic portfolio regimes.",
             "Fair optimizer comparison under shared runtime, shot, and billing accounting.",
             "Structured exports that preserve both benchmark claims and per-evaluation evidence.",
         ],

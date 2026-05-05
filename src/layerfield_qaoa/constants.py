@@ -28,13 +28,13 @@ VALID_MIXER_TYPES = {'xy', 'product_x'}
 VALID_TRANSPILE_OPTIMIZATION_LEVELS = {0, 1, 2, 3}
 
 FAST_SIM_MAX_ASSETS = 12
-DEFAULT_SUITE_OUTPUT_DIR = 'results/multi_regime_suite'
-DEFAULT_SUITE_TITLE = 'Portfolio QAOA characterisation suite'
-DEFAULT_CLI_DESCRIPTION = 'Portfolio QAOA characterisation study'
+DEFAULT_SUITE_OUTPUT_DIR = 'results/legacy_portfolio_suite'
+DEFAULT_SUITE_TITLE = 'Legacy portfolio-QAOA compatibility suite'
+DEFAULT_CLI_DESCRIPTION = 'LayerField QAOA spin studies with legacy portfolio compatibility tooling'
 PAYLOAD_SCHEMA_VERSION = '1.6'
 RESEARCH_QUESTION = (
-    'When does a more sophisticated classical optimizer justify its runtime, shot, queue, '
-    'and mitigation cost for constrained QAOA portfolio optimization?'
+    'Legacy portfolio question: when does a more sophisticated classical optimizer justify its runtime, '
+    'shot, queue, and mitigation cost for constrained QAOA portfolio optimization?'
 )
 BOOTSTRAP_SEEDS = {
     'raw': 17,

@@ -23,7 +23,7 @@ def constraint_hardness(n_assets: int, budget: int) -> float:
 
 @dataclass
 class QUBOSpectralProfile:
-    """Lightweight structural diagnostics for a portfolio-QUBO instance."""
+    """Lightweight structural diagnostics for a legacy portfolio-QUBO instance."""
 
     condition_number: float
     spectral_gap: float | None

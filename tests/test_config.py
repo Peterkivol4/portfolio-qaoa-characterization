@@ -2,8 +2,8 @@ from pathlib import Path
 
 import yaml
 
-from portfolio_qaoa_bench.cli import build_parser
-from portfolio_qaoa_bench.config import RunConfig, apply_overrides, load_runspec, load_suite_spec
+from layerfield_qaoa.cli import build_parser
+from layerfield_qaoa.config import RunConfig, apply_overrides, load_runspec, load_suite_spec
 
 
 def test_runspec_rejects_excess_qubits_for_fast_sim() -> None:
@@ -53,7 +53,7 @@ def test_warm_start_params_must_match_parameter_dimension() -> None:
 
 def test_yaml_config_round_trips() -> None:
     root = Path(__file__).resolve().parents[1]
-    config_path = root / "configs" / "default_run.yaml"
+    config_path = root / "configs" / "legacy_portfolio_default_run.yaml"
     parser = build_parser()
     args = parser.parse_args(["--config", str(config_path)])
     cfg = load_runspec(args.config)
@@ -72,6 +72,6 @@ def test_yaml_config_round_trips() -> None:
 
 def test_factorial_suite_config_loads_study_mode() -> None:
     root = Path(__file__).resolve().parents[1]
-    spec = load_suite_spec(root / "configs" / "mixer_dominance_suite.yaml")
+    spec = load_suite_spec(root / "configs" / "legacy_portfolio_mixer_dominance_suite.yaml")
     assert spec.study_mode == "factorial"
     assert any(study["key"] == "mixer_type" for study in spec.studies)

@@ -12,7 +12,7 @@ from .interfaces import QuboPort
 
 @dataclass
 class PortfolioQUBO:
-    """Binary portfolio-QUBO instance with optional exact reference data."""
+    """Binary legacy portfolio-QUBO instance with optional exact reference data."""
 
     mu: np.ndarray
     sigma: np.ndarray
@@ -48,7 +48,7 @@ class PortfolioQUBO:
 class QuboFactory(QuboPort):
     @staticmethod
     def build(mu: np.ndarray, sigma: np.ndarray, cfg: RunSpec) -> PortfolioQUBO:
-        """Build the penalized portfolio QUBO for a cardinality-constrained Markowitz objective.
+        """Build the penalized legacy portfolio QUBO for a cardinality-constrained Markowitz objective.
 
         The unconstrained quadratic objective is
         ``risk_aversion * x^T Sigma x - mu^T x`` for binary asset-selection vector ``x``.

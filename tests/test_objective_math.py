@@ -1,10 +1,10 @@
 import numpy as np
 
-from portfolio_qaoa_bench.config import RunConfig
-from portfolio_qaoa_bench.data import SyntheticMarket
-from portfolio_qaoa_bench.objective import _approx_ratio, evaluate_objective, make_bounds, weighted_cvar
-from portfolio_qaoa_bench.qubo import QuboFactory
-from portfolio_qaoa_bench.simulator import build_executor
+from layerfield_qaoa.config import RunConfig
+from layerfield_qaoa.data import SyntheticMarket
+from layerfield_qaoa.objective import _approx_ratio, evaluate_objective, make_bounds, weighted_cvar
+from layerfield_qaoa.qubo import QuboFactory
+from layerfield_qaoa.simulator import build_executor
 
 
 def test_weighted_cvar_uses_lower_tail_for_minimization() -> None:

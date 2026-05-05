@@ -2,7 +2,7 @@
 
 ## Scope
 
-This repository is a research codebase for portfolio-QAOA experiments. It does not manage live customer data, brokerage credentials, or a production key lifecycle inside the benchmark loop.
+This repository is a research codebase for QAOA spin-physics experiments. It does not manage customer data, financial accounts, or a production credential lifecycle inside the experiment loop.
 
 ## What was removed
 
@@ -13,7 +13,7 @@ This repository is a research codebase for portfolio-QAOA experiments. It does n
 
 - Public exports are explicit through module-level `__all__`.
 - Logging is centralized through `logger.py` instead of raw `print(...)` calls.
-- Runtime-facing code still expects external credentials if the user chooses live Qiskit Runtime backends, but credential handling is delegated to the environment/runtime toolchain rather than simulated inside the benchmark package.
+- Runtime-facing code may still expect external credentials if the user chooses live Qiskit Runtime backends, but credential handling is delegated to the environment/runtime toolchain rather than simulated inside the package.
 
 ## Why this matters for review
 

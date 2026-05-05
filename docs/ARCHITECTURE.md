@@ -2,24 +2,22 @@
 
 ## Purpose
 
-This repository is organized as a characterisation study for constrained QAOA portfolio optimization. The code is split so that market generation, QUBO construction, execution backends, optimizer loops, and reporting can evolve independently while still sharing a common run configuration.
+This repository is organized as a characterisation study for finite-depth QAOA on frustrated spin Hamiltonians. The code is split so that Hamiltonian construction, exact references, observable extraction, variational optimization, and reporting can evolve independently while still sharing coherent configuration and output formats.
 
 ## Main modules
 
-- `config.py`: strongly typed run and suite configuration objects, YAML loading, and validation.
-- `data.py`: synthetic market regimes, including a budget-aware `hard_budget` regime.
-- `qubo.py`: Markowitz-to-QUBO construction, penalty calibration, and optional exact feasible references.
-- `landscape.py`: instance-level structure metrics such as constraint hardness and simple spectral diagnostics.
-- `simulator.py`: fast statevector execution, Aer execution, runtime-style sampling, and backend accounting.
-- `objective.py`: CVaR-style scoring, feasibility handling, and approximation-gap estimation.
-- `optimizers.py`: classical Markowitz baseline, random search, SPSA, and Bayesian optimization.
-- `reporting.py`: JSON payloads, CSV flattening, bootstrap confidence intervals, and Markdown report generation.
-- `plotting.py`: per-run dashboards and suite dashboards.
-- `pipeline.py`: end-to-end orchestration for one run or a suite.
+- `config.py`: strongly typed spin-study and legacy compatibility configuration objects, YAML loading, and validation.
+- `spin_hamiltonian.py`: dense `J1-J2-h-epsilon` Hamiltonian construction plus regime presets.
+- `exact_diagonalization.py`: exact reference spectra and states for small spin systems.
+- `physical_observables.py`: magnetization, correlation, structure-factor, and entanglement calculations.
+- `p_layer_geometry.py`: QAOA ansatz state construction, parameter optimization, and `PLayerResolutionRecord` production.
+- `parameter_emergence.py`: angle smoothness, curvature, transfer loss, and parameter-confusion diagnostics.
+- `phase_maps.py`: sweep orchestration and `p`-resolution / confusion / cost report generation.
+- `simulator.py`, `optimizers.py`, `pipeline.py`, `reporting.py`, and `plotting.py`: retained legacy benchmark infrastructure plus reusable execution/accounting utilities.
 
 ## Design notes
 
-- Public type names are descriptive and auditable. Legacy aliases remain temporarily for compatibility, but internal logic no longer depends on opaque identifiers.
-- The exact feasible reference is explicit: it is computed only when the configured problem size stays within `exact_reference_max_assets`.
-- Reporting preserves both methodological outputs and structural context so thesis writing can cite not just optimizer outcomes but also instance difficulty indicators.
-- `monolith-full/portfolio_qaoa_bench_monolith.py` is a generated mirror of the modular source tree, kept in sync by `scripts/build_monolith_full.py` and CI checks.
+- The spin-physics subsystem is the primary public surface. Legacy portfolio modules remain only to preserve previously tested execution, reporting, and optimizer paths.
+- Exact diagonalization is explicit and size-limited through `exact_reference_max_spins`, so every reported reference point has a clear computational boundary.
+- Reporting preserves both energy metrics and physical-observable metrics so results can distinguish energy recovery from observable or state recovery.
+- `monolith-full/layerfield_qaoa_monolith.py` is a generated mirror of the modular source tree, kept in sync by `scripts/build_monolith_full.py` and CI checks.

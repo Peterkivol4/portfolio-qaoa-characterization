@@ -42,7 +42,7 @@ def _approx_ratio(best_valid: float, exact_reference: float | None) -> float:
     return float(best / ref)
 
 
-def _portfolio_sharpe_ratio(instance, bitstring: str | None) -> float:
+def _legacy_portfolio_sharpe_ratio(instance, bitstring: str | None) -> float:
     if bitstring is None:
         return float("nan")
     x = np.fromiter((int(bit) for bit in bitstring), dtype=float)
@@ -85,7 +85,7 @@ def _sample_snapshot(instance, counts: dict[str, int], cfg: RunSpec) -> dict[str
         "excess_variance": float(max(float(variance) - shot_noise_variance_proxy, 0.0)),
         "best_valid_energy": float(best_valid),
         "best_valid_bitstring": best_valid_bitstring,
-        "best_valid_sharpe_ratio": _portfolio_sharpe_ratio(instance, best_valid_bitstring),
+        "best_valid_sharpe_ratio": _legacy_portfolio_sharpe_ratio(instance, best_valid_bitstring),
         "valid_ratio": float(valid_ratio),
         "feasible_hit": bool(valid_weight > 0),
         "violation_counts": dict(sorted(violation_counts.items())),

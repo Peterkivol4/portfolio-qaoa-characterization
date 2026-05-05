@@ -7,30 +7,30 @@ from pathlib import Path
 
 import numpy as np
 
-from portfolio_qaoa_bench.config import SpinRunConfig
-from portfolio_qaoa_bench.exact_diagonalization import exact_diagonalize, exact_diagonalize_dense
-from portfolio_qaoa_bench.p_layer_geometry import (
+from layerfield_qaoa.config import SpinRunConfig
+from layerfield_qaoa.exact_diagonalization import exact_diagonalize, exact_diagonalize_dense
+from layerfield_qaoa.p_layer_geometry import (
     build_qaoa_state,
     qaoa_circuit_depth,
     qaoa_parameter_count,
     run_single_spin_instance,
     standard_qaoa_initial_state,
 )
-from portfolio_qaoa_bench.parameter_emergence import (
+from layerfield_qaoa.parameter_emergence import (
     angle_distance,
     minimum_p_for_threshold,
     parameter_confusion_score,
     parameter_transfer_loss,
 )
-from portfolio_qaoa_bench.phase_maps import run_p_layer_sweep
-from portfolio_qaoa_bench.physical_observables import (
+from layerfield_qaoa.phase_maps import run_p_layer_sweep
+from layerfield_qaoa.physical_observables import (
     half_chain_entanglement_entropy,
     magnetization_x,
     magnetization_z,
     mean_correlation_z,
     structure_factor_z,
 )
-from portfolio_qaoa_bench.spin_hamiltonian import build_spin_hamiltonian
+from layerfield_qaoa.spin_hamiltonian import build_spin_hamiltonian
 
 
 def _manual_two_spin_dense(j1: float, h: float) -> np.ndarray:
@@ -156,7 +156,7 @@ def test_cli_spin_p_sweep_subprocess(tmp_path: Path) -> None:
         [
             sys.executable,
             "-m",
-            "portfolio_qaoa_bench.cli",
+            "layerfield_qaoa.cli",
             "p-sweep",
             "--n-spins",
             "3",

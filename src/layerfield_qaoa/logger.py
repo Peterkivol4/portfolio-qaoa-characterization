@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import sys
 
-_LOG = "portfolio_qaoa_bench"
+_LOG = "layerfield_qaoa"
 
 
 def get_logger() -> logging.Logger:

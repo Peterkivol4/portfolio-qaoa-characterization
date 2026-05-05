@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0
+
+- Renamed the primary package from `portfolio_qaoa_bench` to `layerfield_qaoa`.
+- Renamed the generated monolith to `monolith-full/layerfield_qaoa_monolith.py` and updated the sync tooling accordingly.
+- Reframed the repo around the spin-physics `LayerField QAOA` identity and rewrote the top-level README, architecture notes, related-work notes, and contribution guide.
+- Renamed legacy benchmark configs with explicit `legacy_portfolio_` prefixes and updated tests/scripts to treat them as compatibility artifacts rather than the repo default.
+- Removed stale portfolio-era journal/audit collateral and retired unused helper scripts tied to those deleted artifacts.
+- Renamed the local repo directory to `layerfield_qaoa_repo` so the filesystem path matches the new package identity.
+
 ## 0.5.0
 
 - Added a spin-physics subsystem for studying QAOA depth as a physical resolution limit on J1-J2 transverse-field Ising Hamiltonians.

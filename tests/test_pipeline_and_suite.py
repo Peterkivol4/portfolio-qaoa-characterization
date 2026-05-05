@@ -3,8 +3,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from portfolio_qaoa_bench.config import RunConfig, SuiteConfig
-from portfolio_qaoa_bench.pipeline import run_benchmark, run_suite
+from layerfield_qaoa.config import RunConfig, SuiteConfig
+from layerfield_qaoa.pipeline import run_benchmark, run_suite
 
 
 def test_single_run_generates_json_and_png(tmp_path: Path) -> None:
